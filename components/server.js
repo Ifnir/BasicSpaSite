@@ -11,6 +11,9 @@ const cors = require('cors')
 const helmet = require('helmet')
 const rfs = require('rotating-file-stream')
 const morgan = require('morgan')
+const errorhandler = require('errorhandler')
+const RedisStore = require('connect-redis')(session)
+const redis = require('redis')
 
 const PORT = process.env.PORT || 3000
 
@@ -25,17 +28,20 @@ app.use(helmet.contentSecurityPolicy({
 app.use(helmet.noCache())
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 
-app.use(cookieParser())
+app.use(cookieParser(process.env.COOKIE))
 
+const client = redis.createClient()
 const hbs = exphbs.create({ defaultLayout: 'main' })
 
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
 app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
+  secret: process.env.SESSIONKEY,
+  store: new RedisStore({ host: process.env.RHOST, port: process.env.RPORT, 
+    client: client, tll: process.env.RTTL}),
+  resave: false,
+  saveUninitialized: false
 }))
 
 app.use(bodyParser.urlencoded({ extended: true }))

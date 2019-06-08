@@ -1,4 +1,4 @@
-### Basic SPA Site
+# Basic SPA Site
 
 ```
 A SPA site to control Discord / Twitch bots
@@ -15,8 +15,7 @@ A SPA site to control Discord / Twitch bots
 ## SESSIONKEY & COOKIE
  - Just put it as password
  
- ## Redis
- # Standard setup
+ # Redis
  - RHOST = localhost
  - RPORT = 6379
  - RTTL = 260

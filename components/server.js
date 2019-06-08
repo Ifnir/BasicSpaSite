@@ -4,11 +4,26 @@ const exphbs = require('express-handlebars')
 const app = express()
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser');
-const session = require('express-session');
+const bodyParser = require('body-parser')
+const session = require('express-session')
 const routes = require('./routes/index')
+const cors = require('cors')
+const helmet = require('helmet')
 
 const PORT = process.env.PORT || 3000
+
+app.use(helmet())
+
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+    }
+  }))
+app.use(helmet.noCache())
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
+
+app.use(cookieParser())
 
 const hbs = exphbs.create({ defaultLayout: 'main' })
 
@@ -30,7 +45,16 @@ app.use(routes)
  // Allow incoming connection from default router address
 app.set('trust proxy', 'loopback, linklocal, uniquelocal')
 
-app.use(cookieParser())
+const allowedOrigins = ['localhost:8080']
+
+app.use(cors({ origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) === -1) {
+        const reply = 'CORS policy for this site does not' +
+        'allow access from the specified origin.'
+        return callback(new Error(reply), false)
+    }
+    return callback(null, true)
+}}))
 
 app.use(favicon(path.join(__dirname, '../public/favicon.png')))
 

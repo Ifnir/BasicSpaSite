@@ -71,7 +71,7 @@ const accessLogStream = rfs(`${__dirname}/log/morgan.log`, {
     size: '10M',
 })
 
-if (process.env.NODE_ENV === 'dev' || null) {
+if (process.env.NODE_ENV === 'development' || null) {
     console.warn('In development mode!')
     app.use(errorhandler({ dumpExceptions: true, showStack: true }))
     app.use(morgan('dev'))

@@ -1,0 +1,7 @@
+function loggedin () {
+
+}
+
+function loggedout () {
+    
+}

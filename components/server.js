@@ -9,6 +9,8 @@ const session = require('express-session')
 const routes = require('./routes/index')
 const cors = require('cors')
 const helmet = require('helmet')
+const rfs = require('rotating-file-stream')
+const morgan = require('morgan')
 
 const PORT = process.env.PORT || 3000
 
@@ -56,6 +58,27 @@ app.use(cors({ origin: (origin, callback) => {
         return callback(null, true)
     } 
 }))
+
+const accessLogStream = rfs(`${__dirname}/log/morgan.log`, {
+    interval: '1d', // rotate daily
+    compress: 'gzip',
+    size: '10M',
+})
+
+if (process.env.NODE_ENV === 'dev' || null) {
+    console.warn('In development mode!')
+    app.use(errorhandler({ dumpExceptions: true, showStack: true }))
+    app.use(morgan('dev'))
+    process.on('warning', e => console.warn(e.stack))
+}
+
+if (process.env.NODE_ENV === 'production') {
+    console.warn('In production mode!')
+    app.use(morgan('combined', 
+    { 
+        skip(req, res) { return res.statusCode < 400; }, stream: accessLogStream 
+    }))
+}
 
 app.use(favicon(path.join(__dirname, '../public/favicon.png')))
 

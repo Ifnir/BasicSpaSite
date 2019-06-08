@@ -11,3 +11,12 @@ A SPA site to control Discord / Twitch bots
 - [ ] Make middleware for logged in and logged out sessions
 - [ ] ACL for roles and permissions
 - [ ] Set whitelist for cors for a restful api endpoint
+
+## SESSIONKEY & COOKIE
+ - Just put it as password
+ 
+ ## Redis
+ # Standard setup
+ - RHOST = localhost
+ - RPORT = 6379
+ - RTTL = 260

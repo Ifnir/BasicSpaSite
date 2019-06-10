@@ -1,4 +1,5 @@
 // Update with your config settings.
+require('dotenv').config()
 
 module.exports = {
   development: {
@@ -30,7 +31,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: __dirname + '/components/migrations'
     }
   },
 
@@ -47,7 +48,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations'
+      tableName: __dirname + '/components/migrations'
     }
   }
 

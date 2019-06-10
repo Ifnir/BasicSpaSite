@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "standard && node -r dotenv/config main.js && exit 1",
     "fix": "standard --fix && node -r dotenv/config main.js && exit 1",
-    "start": "nodemon -r dotenv/config index.js"
+    "start": "nodemon --exec babel-node index.js",
+    "build": "babel src --out-dir dist",
+    "serve": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +25,7 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "express-session": "1.16.1",
+    "faker": "4.1.0",
     "helmet": "3.18.0",
     "knex": "0.17.3",
     "morgan": "1.9.1",
@@ -32,6 +35,9 @@
     "serve-favicon": "2.5.0"
   },
   "devDependencies": {
+    "@babel/core": "7.4.5",
+    "@babel/node": "7.4.5",
+    "@babel/preset-env": "7.4.5",
     "standard": "12.0.1"
   }
 }

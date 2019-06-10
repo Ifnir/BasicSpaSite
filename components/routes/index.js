@@ -9,7 +9,11 @@ app.get('/', (req, res, next) => {
   })
 })
 
-app.use('/login', require('./auth'))
+app.use('/login', require('./auth'), (req, res) => {
+  res.render('auth/login', {
+    showTitle: true,
+  })
+})
 
 app.all('*', (req, res) => {
   if (res.statusCode < 400) {
@@ -24,7 +28,6 @@ app.all('*', (req, res) => {
 
 app.use((err, req, res, next) => {
   if (res.statusCode > 500) {
-    // stream to log file
     res.render('errors/status', {
       showTitle: true,
       helpers: {

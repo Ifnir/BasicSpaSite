@@ -14,6 +14,7 @@ const morgan = require('morgan')
 const errorhandler = require('errorhandler')
 const RedisStore = require('connect-redis')(session)
 const redis = require('redis')
+require('dotenv').config()
 
 const PORT = process.env.PORT || 3000
 

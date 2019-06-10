@@ -12,10 +12,6 @@ module.exports.hashsalt = async function (string) {
 }
 
 module.exports.dehashed = async function (body, passwd) {
-  /**
-  * @body takes parameter from req.body.password send by user who tries to login
-  * @passwd takes the hashed password from database and compare
-  */
   const decipher = await new Promise((resolve, reject) => {
     bcrypt.compare(body, passwd, (err, deciphed) => {
       if (err) reject(err)

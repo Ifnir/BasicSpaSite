@@ -1,6 +1,6 @@
 
 const faker = require('faker')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const createFakeUser = (data) => ({
   username: faker.internet.userName(),

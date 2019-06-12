@@ -12,7 +12,7 @@ exports.seed = async function(knex, Promise) {
   const fakeUsers = []
   const desiredUser = 10
   for (let i = 0; i < desiredUser; i++) {
-    bcrypt.hash('password', 5, function( err, bcryptedPassword) {
+    bcrypt.hash('password', 10, function( err, bcryptedPassword) {
       //save to db
       fakeUsers.push(createFakeUser(bcryptedPassword))
    })
